@@ -18,7 +18,52 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Settings
+
+```ruby
+Direct::API::V5.load_settings('config/yandex_direct_api.yml')
+```
+
+with YML config:
+
+```yml
+production:
+  host: api.direct.yandex.com
+  auth_token: token_string
+  client_login: login_string
+
+development:
+  host: api-sandbox.direct.yandex.com
+  ...
+```
+
+Or
+
+```ruby
+Direct::API::V5.configure do |config|
+  config.host = 'api.direct.yandex.com'
+  config.auth_token = 'token_string'
+  config.client_login = 'login_string'
+end
+```
+
+### Create client
+
+```ruby
+api = Direct::API::V5.client
+```
+
+Set client login (if advertising agency):
+
+```ruby
+api = Direct::API::V5.client(client_login: 'login_string')
+```
+
+Overwrite any settings:
+
+```ruby
+api = Direct::API::V5.client(auth_token: 'new_token', client_login: 'new_login')
+```
 
 ## Contributing
 

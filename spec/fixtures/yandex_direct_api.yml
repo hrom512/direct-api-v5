@@ -1,0 +1,4 @@
+test:
+  host: api.direct.yandex.com
+  auth_token: token_string
+  client_login: login_string

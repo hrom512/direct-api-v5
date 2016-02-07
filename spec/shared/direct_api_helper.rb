@@ -1,3 +1,5 @@
+require 'direct/api/v5'
+
 module DirectApiHelper
   def make_direct_api_client
     Direct::API::V5.client(

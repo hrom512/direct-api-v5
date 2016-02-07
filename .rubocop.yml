@@ -5,6 +5,9 @@ AllCops:
 Metrics/LineLength:
   Max: 120
 
+Style/HashSyntax:
+  UseHashRocketsWithSymbolValues: true
+
 Style/BlockComments:
   Exclude:
     - 'spec/spec_helper.rb'

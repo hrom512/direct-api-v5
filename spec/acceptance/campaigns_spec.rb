@@ -48,10 +48,10 @@ describe 'Campaigns', :type => :acceptance do
 
     subject do
       api.campaigns
-        .select(*fields)
-        .select(text_campaign: text_campaign_fields)
-        .where(conditions)
-        .get
+         .select(*fields)
+         .select(text_campaign: text_campaign_fields)
+         .where(conditions)
+         .get
     end
 
     it 'return campaigns' do

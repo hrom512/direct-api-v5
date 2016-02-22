@@ -1,6 +1,6 @@
 require 'direct/api/v5/version'
+require 'direct/api/v5/default_settings'
 require 'direct/api/v5/client'
-require 'direct/api/v5/settings'
 
 module Direct
   module API
@@ -11,15 +11,11 @@ module Direct
         end
 
         def configure(&block)
-          Settings.configure(&block)
+          DefaultSettings.build(&block)
         end
 
         def load_settings(yml_file)
-          Settings.load_from_yml(yml_file)
-        end
-
-        def settings
-          Settings
+          DefaultSettings.load_from_yml(yml_file)
         end
       end
     end

@@ -5,7 +5,7 @@ describe Direct::API::V5 do
     let(:settings) { { param1: 'value1', param2: 'value2' } }
     let(:client) { double('client') }
 
-    before { allow(Direct::API::V5::Client).to receive(:new).with(settings).and_return(client) }
+    before { allow(described_class::Client).to receive(:new).with(settings).and_return(client) }
 
     subject { described_class.client(settings) }
 
@@ -18,7 +18,7 @@ describe Direct::API::V5 do
     let(:yml_path) { 'file_path' }
 
     it 'call DefaultSettings::load_from_yml' do
-      expect(Direct::API::V5::DefaultSettings).to receive(:load_from_yml).with(yml_path)
+      expect(described_class::DefaultSettings).to receive(:load_from_yml).with(yml_path)
       described_class.load_settings(yml_path)
     end
   end
@@ -27,7 +27,7 @@ describe Direct::API::V5 do
     let(:proc) { Proc.new {} }
 
     it 'call DefaultSettings::build' do
-      expect(Direct::API::V5::DefaultSettings).to receive(:build) do |&block|
+      expect(described_class::DefaultSettings).to receive(:build) do |&block|
         expect(proc).to be(block)
       end
       described_class.configure(&proc)

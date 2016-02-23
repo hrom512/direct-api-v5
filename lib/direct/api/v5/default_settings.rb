@@ -14,7 +14,7 @@ module Direct
             @client_login = settings['client_login']
           end
 
-          def build
+          def configure
             yield(self)
           end
         end

@@ -11,7 +11,7 @@ module Direct
         end
 
         def configure(&block)
-          DefaultSettings.build(&block)
+          DefaultSettings.configure(&block)
         end
 
         def load_settings(yml_file)

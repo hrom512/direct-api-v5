@@ -26,8 +26,8 @@ describe Direct::API::V5 do
   describe '::configure' do
     let(:proc) { Proc.new {} }
 
-    it 'call DefaultSettings::build' do
-      expect(described_class::DefaultSettings).to receive(:build) do |&block|
+    it 'call DefaultSettings::configure' do
+      expect(described_class::DefaultSettings).to receive(:configure) do |&block|
         expect(proc).to be(block)
       end
       described_class.configure(&proc)

@@ -11,13 +11,13 @@ describe Direct::API::V5::DefaultSettings do
     it { expect(described_class.client_login).to eq('login_string') }
   end
 
-  describe '::build' do
+  describe '::configure' do
     let(:host) { 'new_host.direct.yandex.com' }
     let(:auth_token) { 'custom_token' }
     let(:client_login) { 'custom_client' }
 
     before do
-      described_class.build do |conf|
+      described_class.configure do |conf|
         conf.host = host
         conf.auth_token = auth_token
         conf.client_login = client_login

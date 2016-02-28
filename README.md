@@ -1,5 +1,9 @@
 # Direct::API::V5
 
+[![Travis CI](https://travis-ci.org/Hrom512/direct-api-v5.svg?branch=master)](https://travis-ci.org/Hrom512/direct-api-v5)
+
+[![Code Climate](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/gpa.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5)
+
 TODO: Write a gem description
 
 ## Installation

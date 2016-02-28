@@ -1,5 +1,7 @@
 # Direct::API::V5
 
+[![Join the chat at https://gitter.im/hrom512/direct-api-v5](https://badges.gitter.im/hrom512/direct-api-v5.svg)](https://gitter.im/hrom512/direct-api-v5?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Travis CI](https://travis-ci.org/Hrom512/direct-api-v5.svg?branch=master)](https://travis-ci.org/Hrom512/direct-api-v5)
 [![Code Climate](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/gpa.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5)
 

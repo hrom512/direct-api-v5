@@ -24,6 +24,7 @@ describe Direct::API::V5 do
   end
 
   describe '::configure' do
+    # rubocop:disable Style/Proc
     let(:proc) { Proc.new {} }
 
     it 'call DefaultSettings::configure' do

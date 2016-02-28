@@ -16,6 +16,7 @@ describe Direct::API::V5::Client do
   end
 
   describe '::service_name' do
+    # rubocop:disable Style/ClassAndModuleChildren
     module Direct::API::V5::Services
       class CustomService
         def initialize(_client)

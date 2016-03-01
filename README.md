@@ -1,5 +1,6 @@
 # Direct::API::V5
 
+[![Gem Version](https://badge.fury.io/rb/direct-api-v5.svg)](https://badge.fury.io/rb/direct-api-v5)
 [![Travis CI](https://travis-ci.org/hrom512/direct-api-v5.svg?branch=dev)](https://travis-ci.org/hrom512/direct-api-v5)
 [![Code Climate](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/gpa.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5)
 [![Test Coverage](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/coverage.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5/coverage)

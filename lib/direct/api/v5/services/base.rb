@@ -2,14 +2,25 @@ module Direct
   module API
     module V5
       module Services
+        # Base service class
+        # @abstract
         class Base
+          # Params for API method
           attr_reader :params
 
+          # Initialize service object
+          # @param client [Direct::API::V5::Client] API client
           def initialize(client)
             @client = client
             @params = {}
           end
 
+          # Update conditions
+          # @param params [Hash] conditions
+          # @return [Direct::API::V5::Services::Base] self
+          # @example
+          #   client = Direct::API::V5.client
+          #   client.campaigns.where(id: [1, 2]).get
           def where(params)
             params.each do |key, value|
               @params[:selection_criteria] ||= {}
@@ -19,6 +30,12 @@ module Direct
             self
           end
 
+          # Update fields list
+          # @param args [Array] fields list
+          # @return [Direct::API::V5::Services::Base] self
+          # @example
+          #   client = Direct::API::V5.client
+          #   client.campaigns.select(:id, :name, text_campaign: [:counter_ids, :settings]).get
           def select(*args)
             args.each do |arg|
               if arg.is_a?(Hash)

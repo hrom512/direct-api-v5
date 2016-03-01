@@ -30,22 +30,4 @@ describe Direct::API::V5::Services::Base do
       expect(params[:selection_criteria]).to eq(result_options)
     end
   end
-
-  describe '.select' do
-    it 'add fields' do
-      params = object.select(:field_name1, :field_name2,
-                             :child_list1 => [:field_name3, :field_name4],
-                             :child_list2 => :field_name5).params
-      expect(params).to eq(field_names: [:field_name1, :field_name2],
-                           child_list1_field_names: [:field_name3, :field_name4],
-                           child_list2_field_names: [:field_name5])
-    end
-
-    it 'update fields' do
-      params = object.select(child_list: [:field_name1, :field_name2])
-                     .select(:child_list => :field_name3)
-                     .params
-      expect(params).to eq(child_list_field_names: [:field_name1, :field_name2, :field_name3])
-    end
-  end
 end

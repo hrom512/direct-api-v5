@@ -25,8 +25,8 @@ module Direct
           #   client.campaigns.where(id: [1, 2]).get
           def where(params)
             params.each do |key, value|
-              @params[:selection_criteria] ||= {}
-              @params[:selection_criteria][key.to_sym] = value
+              @params[:criteria] ||= {}
+              @params[:criteria][key.to_sym] = value
             end
 
             self

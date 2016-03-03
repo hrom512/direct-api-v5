@@ -22,12 +22,12 @@ describe Direct::API::V5::Services::Base do
 
     it 'add params' do
       params = object.where(where_options1).params
-      expect(params[:selection_criteria]).to eq(where_options1)
+      expect(params[:criteria]).to eq(where_options1)
     end
 
     it 'update params' do
       params = object.where(where_options1).where(where_options2).params
-      expect(params[:selection_criteria]).to eq(result_options)
+      expect(params[:criteria]).to eq(result_options)
     end
   end
 end

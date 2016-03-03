@@ -5,6 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/gpa.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5)
 [![Test Coverage](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/coverage.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5/coverage)
 [![Inline docs](http://inch-ci.org/github/hrom512/direct-api-v5.svg?branch=dev)](http://inch-ci.org/github/hrom512/direct-api-v5)
+[![Dependency Status](https://gemnasium.com/hrom512/direct-api-v5.svg)](https://gemnasium.com/hrom512/direct-api-v5)
 
 TODO: Write a gem description
 

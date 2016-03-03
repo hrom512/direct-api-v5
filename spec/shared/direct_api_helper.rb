@@ -4,6 +4,7 @@ module DirectApiHelper
   def make_direct_api_client
     Direct::API::V5.client(
       host: direct_api_host,
+      language: direct_api_language,
       auth_token: direct_api_auth_token,
       client_login: direct_api_client_login
     )
@@ -18,7 +19,7 @@ module DirectApiHelper
   def direct_api_request_headers
     {
       'Content-Type' => 'application/json; charset=utf-8',
-      'Accept-Language' => 'ru',
+      'Accept-Language' => direct_api_language,
       'Authorization' => "Bearer #{direct_api_auth_token}",
       'Client-Login' => direct_api_client_login
     }
@@ -26,6 +27,10 @@ module DirectApiHelper
 
   def direct_api_host
     'api.direct.yandex.com'
+  end
+
+  def direct_api_language
+    'en'
   end
 
   def direct_api_auth_token
@@ -38,5 +43,5 @@ module DirectApiHelper
 end
 
 RSpec.configure do |config|
-  config.include DirectApiHelper, :type => :acceptance
+  config.include DirectApiHelper
 end

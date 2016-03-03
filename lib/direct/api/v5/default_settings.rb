@@ -4,8 +4,8 @@ module Direct
       # Default API settings store
       class DefaultSettings
         class << self
-          DEFAULT_HOST = 'api.direct.yandex.com'
-          DEFAULT_LANGUAGE = 'en'
+          DEFAULT_HOST = 'api.direct.yandex.com'.freeze
+          DEFAULT_LANGUAGE = 'en'.freeze
 
           attr_accessor :host
           attr_accessor :language

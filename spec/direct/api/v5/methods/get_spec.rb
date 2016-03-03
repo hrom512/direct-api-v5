@@ -14,15 +14,15 @@ describe Direct::API::V5::Methods::Get do
   describe '#select' do
     it 'add fields' do
       params = service.select(:field1, :field2, :child1 => [:field3, :field4], :child2 => :field5).params
-      expect(params[:field_names]).to eq([:field1, :field2])
-      expect(params[:child1_field_names]).to eq([:field3, :field4])
-      expect(params[:child2_field_names]).to eq([:field5])
+      expect(params[:fields]).to eq([:field1, :field2])
+      expect(params[:child1_fields]).to eq([:field3, :field4])
+      expect(params[:child2_fields]).to eq([:field5])
     end
 
     it 'update fields' do
       params = service.select(:field1, child: [:field2, :field3]).select(:field4, :child => :field5).params
-      expect(params[:field_names]).to eq([:field1, :field4])
-      expect(params[:child_field_names]).to eq([:field2, :field3, :field5])
+      expect(params[:fields]).to eq([:field1, :field4])
+      expect(params[:child_fields]).to eq([:field2, :field3, :field5])
     end
   end
 

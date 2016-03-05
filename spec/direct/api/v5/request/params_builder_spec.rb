@@ -4,8 +4,8 @@ describe Direct::API::V5::Request::ParamsBuilder do
   let(:input_params) do
     {
       selection_criteria: {
-        :types => %w(TEXT_CAMPAIGN),
-        :states => %w(ON OFF)
+        types: %w(TEXT_CAMPAIGN),
+        states: %w(ON OFF)
       },
       field_names: [:id, :name, :state, :status, :status_payment],
       text_campaign_field_names: [:counter_ids],

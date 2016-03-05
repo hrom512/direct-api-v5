@@ -15,3 +15,6 @@ Style/BlockComments:
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
+
+Style/ClassAndModuleChildren:
+  Enabled: false

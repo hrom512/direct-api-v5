@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Direct::API::V5::Methods::Get do
-  # rubocop:disable Style/ClassAndModuleChildren
   module Direct::API::V5::Services
     class ServiceWithGetMethod < Base
       include Direct::API::V5::Methods::Get

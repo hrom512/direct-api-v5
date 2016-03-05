@@ -1,3 +1,4 @@
+require 'direct/api/v5/request'
 require 'direct/api/v5/methods/get'
 
 module Direct

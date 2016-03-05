@@ -29,12 +29,25 @@ describe Direct::API::V5::Request do
       { result: { Campaigns: result } }
     end
 
-    before { stub_direct_api_request(service, request_body, response_body) }
-
     subject { described_class.send(client.settings, service, method, params) }
 
-    it 'send request' do
-      is_expected.to eq(result)
+    context 'with valid response' do
+      before { stub_direct_api_request(service, request_body, response_body) }
+
+      it 'return body and headers' do
+        body, headers = subject
+        expect(body).to eq(response_body)
+        expect(headers[:RequestId]).to eq(direct_api_request_id)
+        expect(headers[:Units]).to eq(direct_api_units)
+      end
+    end
+
+    context 'with invalid response' do
+      before { stub_direct_api_request(service, request_body, 'invalid') }
+
+      it 'raise error' do
+        expect { subject }.to raise_error(Direct::API::V5::Request::InvalidResponseError)
+      end
     end
   end
 end

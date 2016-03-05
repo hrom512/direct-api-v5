@@ -11,9 +11,12 @@ module DirectApiHelper
   end
 
   def stub_direct_api_request(direct_service, request_body, response_body)
-    stub_request(:post, "https://#{direct_api_host}/json/v5/#{direct_service}/")
-      .with(body: request_body.to_json, headers: direct_api_request_headers)
-      .to_return(body: response_body.to_json)
+    url = "https://#{direct_api_host}/json/v5/#{direct_service}/"
+    request_body = request_body.to_json if request_body.is_a?(Hash)
+    response_body = response_body.to_json if response_body.is_a?(Hash)
+    stub_request(:post, url)
+      .with(body: request_body, headers: direct_api_request_headers)
+      .to_return(body: response_body, headers: direct_api_response_headers)
   end
 
   def direct_api_request_headers
@@ -22,6 +25,14 @@ module DirectApiHelper
       'Accept-Language' => direct_api_language,
       'Authorization' => "Bearer #{direct_api_auth_token}",
       'Client-Login' => direct_api_client_login
+    }
+  end
+
+  def direct_api_response_headers
+    {
+      'Content-Type' => 'application/json',
+      'RequestId' => direct_api_request_id,
+      'Units' => direct_api_units
     }
   end
 
@@ -39,6 +50,14 @@ module DirectApiHelper
 
   def direct_api_client_login
     'client_id'
+  end
+
+  def direct_api_request_id
+    '8695244274068608439'
+  end
+
+  def direct_api_units
+    '10/20828/64000'
   end
 end
 

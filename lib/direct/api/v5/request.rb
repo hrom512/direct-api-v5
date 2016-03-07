@@ -20,15 +20,15 @@ module Direct
           def send(settings, service, method, params = {})
             host = settings.host
             url = make_url(service)
-            body = make_body(method, params)
-            headers = make_headers(settings.language, settings.auth_token, settings.client_login)
+            request_body = make_body(method, params)
+            request_headers = make_headers(settings.language, settings.auth_token, settings.client_login)
 
-            response = make_http_request(host, url, body, headers)
+            response = make_http_request(host, url, request_body, request_headers)
 
-            body = parse_response(response.body)
-            headers = response.headers
+            response_body = parse_response(response.body)
+            response_headers = response.headers
 
-            [body, headers]
+            [response_body, response_headers]
           end
 
           private

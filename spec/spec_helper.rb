@@ -1,3 +1,6 @@
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 ENV['RAILS_ENV'] ||= 'test'
 
 %w(support shared).each do |dir|

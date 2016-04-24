@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'direct/api/v5/services/base'
+require 'direct/api/v5/methods/get'
 
 describe Direct::API::V5::Methods::Get do
   module Direct::API::V5::Services

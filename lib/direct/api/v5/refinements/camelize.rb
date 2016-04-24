@@ -3,7 +3,11 @@ module Direct::API::V5
     module Camelize
       refine String do
         def camelize
-          split('_').map(&:capitalize).join('')
+          if self =~ /[A-Z]/
+            self
+          else
+            split('_').map(&:capitalize).join('')
+          end
         end
       end
 

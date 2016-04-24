@@ -8,6 +8,10 @@ describe Direct::API::V5::Refinements::Underscore do
     it 'underscore string' do
       expect('ConsiderWorkingWeekends'.underscore).to eq('consider_working_weekends')
     end
+
+    it 'return self if already underscore' do
+      expect('consider_working_weekends'.underscore).to eq('consider_working_weekends')
+    end
   end
 
   describe 'Symbol#underscore' do

@@ -8,6 +8,10 @@ describe Direct::API::V5::Refinements::Camelize do
     it 'camelize string' do
       expect('consider_working_weekends'.camelize).to eq('ConsiderWorkingWeekends')
     end
+
+    it 'return self if already camelized' do
+      expect('ConsiderWorkingWeekends'.camelize).to eq('ConsiderWorkingWeekends')
+    end
   end
 
   describe 'Symbol#camelize' do

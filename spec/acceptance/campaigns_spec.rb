@@ -4,58 +4,65 @@ describe 'Campaigns', :type => :acceptance do
   let(:api) { make_direct_api_client }
 
   describe '.get' do
-    let(:fields) { [:id, :name, :start_date] }
-    let(:text_campaign_fields) { [:counter_ids, :relevant_keywords] }
-    let(:conditions) do
-      { :type => :text_campaign, :state => [:on, :suspended], :status_payment => :allowed }
-    end
-    let(:campaigns) do
-      [
-        { id: 1, name: 'Campaign 1', start_date: Date.parse('2015-01-01') },
-        { id: 2, name: 'Campaign 2', start_date: Date.parse('2015-02-01') }
-      ]
-    end
-
-    let(:field_names) { %w(Id Name StartDate) }
-    let(:text_campaign_field_names) { %w([CounterIds RelevantKeywords) }
-    let(:selection_criteria) do
-      { Types: %w(TEXT_CAMPAIGN), States: %w(ON SUSPENDED), StatusesPayment: %w(ALLOWED) }
-    end
-    let(:response_objects) do
-      [
-        { Id: 1, Name: 'Campaign 1', StartDate: '2015-01-01' },
-        { Id: 2, Name: 'Campaign 2', StartDate: '2015-02-01' }
-      ]
-    end
-
-    let(:request_body) do
-      {
+    before do
+      request_body = {
         method: 'get',
         params: {
-          FieldNames: field_names,
-          TextCampaignFieldNames: text_campaign_field_names,
-          SelectionCriteria: selection_criteria
+          FieldNames: %w(Id Name State StartDate),
+          TextCampaignFieldNames: %w(CounterIds RelevantKeywords),
+          SelectionCriteria: {
+            Types: %w(TEXT_CAMPAIGN),
+            States: %w(ON SUSPENDED),
+            StatusesPayment: %w(ALLOWED)
+          }
         }
       }
-    end
-    let(:response_body) do
-      { result: { Campaigns: response_objects } }
-    end
 
-    before do
+      response_body = {
+        result: {
+          Campaigns: [
+            { Id: 1, Name: 'Campaign 1', State: 'ON', StartDate: '2016-01-01' },
+            { Id: 2, Name: 'Campaign 2', State: 'SUSPENDED', StartDate: '2016-02-01' }
+          ]
+        }
+      }
+
       stub_direct_api_request(:campaigns, request_body, response_body)
     end
 
-    subject do
+    subject(:response) do
       api.campaigns
-         .select(*fields)
-         .select(text_campaign: text_campaign_fields)
-         .where(conditions)
-         .get
+        .select(:id, :name, :state, :start_date)
+        .select(text_campaign: [:counter_ids, :relevant_keywords])
+        .where(types: %w(TEXT_CAMPAIGN), states: %w(ON SUSPENDED), statuses_payment: %w(ALLOWED))
+        .get
     end
 
-    it 'return campaigns' do
-      is_expected.to eq(campaigns)
+    subject(:campaign) do
+      response[0]
+    end
+
+    it 'have request_id' do
+      expect(response.request_id).to eq(direct_api_request_id)
+    end
+
+    it 'have units' do
+      expect(response.units.raw).to eq(direct_api_units) # '10/20828/64000'
+
+      expect(response.units.spent).to eq(10)
+      expect(response.units.available).to eq(20828)
+      expect(response.units.daily_limit).to eq(64000)
+    end
+
+    it 'have campaigns' do
+      expect(response.size).to eq(2)
+    end
+
+    it 'campaign contains data' do
+      expect(campaign.id).to eq(1)
+      expect(campaign.name).to eq('Campaign 1')
+      expect(campaign.state).to eq('ON')
+      expect(campaign.start_date).to eq(Date.parse('2016-01-01'))
     end
   end
 end

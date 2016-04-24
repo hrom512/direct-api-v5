@@ -16,6 +16,13 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
+
+  config.define_derived_metadata do |meta|
+    meta[:aggregate_failures] = true
+  end
+
   # TODO: remove
   config.filter_run_excluding :type => :acceptance
 end

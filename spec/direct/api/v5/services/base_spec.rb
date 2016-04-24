@@ -1,33 +1,30 @@
 require 'spec_helper'
 
 describe Direct::API::V5::Services::Base do
-  let(:object) { described_class.new(nil) }
+  let(:service) { described_class.new(nil) }
+  let(:request_params) { service.request_params }
 
-  it 'have blank params' do
-    expect(object.params).to eq({})
+  it 'have blank request_params' do
+    expect(request_params).to eq({})
   end
 
   describe '.where' do
-    let(:where_options1) do
-      { param1: 'value1', param2: 'value2' }
+    it 'return yourself' do
+      result = service.where(attr1: 'value1')
+      expect(result).to eq(service)
     end
 
-    let(:where_options2) do
-      { param1: %w(new values), param3: 'value3' }
+    it 'add criteria' do
+      service.where(attr1: 'value1', attr2: 'value2')
+      expect(request_params[:criteria][:attr1]).to eq('value1')
+      expect(request_params[:criteria][:attr2]).to eq('value2')
     end
 
-    let(:result_options) do
-      { param1: %w(new values), param2: 'value2', param3: 'value3' }
-    end
-
-    it 'add params' do
-      params = object.where(where_options1).params
-      expect(params[:criteria]).to eq(where_options1)
-    end
-
-    it 'update params' do
-      params = object.where(where_options1).where(where_options2).params
-      expect(params[:criteria]).to eq(result_options)
+    it 'update criteria' do
+      service.where(attr1: 'value1', attr2: 'value2').where(attr1: 'new value', attr3: 'value3')
+      expect(request_params[:criteria][:attr1]).to eq('new value')
+      expect(request_params[:criteria][:attr2]).to eq('value2')
+      expect(request_params[:criteria][:attr3]).to eq('value3')
     end
   end
 end

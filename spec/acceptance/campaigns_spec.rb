@@ -32,10 +32,10 @@ describe 'Campaigns', :type => :acceptance do
 
     subject(:response) do
       api.campaigns
-        .select(:id, :name, :state, :start_date)
-        .select(text_campaign: [:counter_ids, :relevant_keywords])
-        .where(types: %w(TEXT_CAMPAIGN), states: %w(ON SUSPENDED), statuses_payment: %w(ALLOWED))
-        .get
+         .select(:id, :name, :state, :start_date)
+         .select(text_campaign: [:counter_ids, :relevant_keywords])
+         .where(types: %w(TEXT_CAMPAIGN), states: %w(ON SUSPENDED), statuses_payment: %w(ALLOWED))
+         .get
     end
 
     subject(:campaign) do
@@ -50,8 +50,8 @@ describe 'Campaigns', :type => :acceptance do
       expect(response.units.raw).to eq(direct_api_units) # '10/20828/64000'
 
       expect(response.units.spent).to eq(10)
-      expect(response.units.available).to eq(20828)
-      expect(response.units.daily_limit).to eq(64000)
+      expect(response.units.available).to eq(20_828)
+      expect(response.units.daily_limit).to eq(64_000)
     end
 
     it 'have campaigns' do

@@ -18,15 +18,15 @@ describe Direct::API::V5::Request::ParamsBuilder do
 
   let(:output_params) do
     {
-      'SelectionCriteria' => {
-        'Types' => %w(TEXT_CAMPAIGN),
-        'States' => %w(ON OFF)
+      SelectionCriteria: {
+        Types: %w(TEXT_CAMPAIGN),
+        States: %w(ON OFF)
       },
-      'FieldNames' => %w(Id Name State Status StatusPayment),
-      'TextCampaignFieldNames' => %w(CounterIds),
-      'Page' => {
-        'Limit' => 100,
-        'Offset' => 200
+      FieldNames: [:Id, :Name, :State, :Status, :StatusPayment],
+      TextCampaignFieldNames: [:CounterIds],
+      Page: {
+        Limit: 100,
+        Offset: 200
       }
     }
   end

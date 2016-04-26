@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.1'
 
+  spec.add_dependency 'hashie', '~> 3.4'
   spec.add_dependency 'faraday'
   spec.add_dependency 'multi_json'
 

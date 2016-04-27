@@ -1,5 +1,5 @@
 require 'direct/api/v5/settings'
-require 'direct/api/v5/services/base'
+require 'direct/api/v5/services/campaigns'
 require 'direct/api/v5/refinements/camelize'
 
 module Direct

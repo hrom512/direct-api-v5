@@ -31,6 +31,7 @@ module Direct::API::V5
           result
         end
 
+        # rubocop:disable Metrics/MethodLength
         def process_value(value)
           if value.is_a?(Hash)
             process_hash(value)

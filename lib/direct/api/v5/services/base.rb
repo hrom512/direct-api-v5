@@ -1,4 +1,5 @@
 require 'direct/api/v5/request'
+require 'direct/api/v5/response'
 
 module Direct::API::V5
   module Services
@@ -42,8 +43,9 @@ module Direct::API::V5
         raise 'Not implemented'
       end
 
-      def call_method(_method, _params = {})
-        # TODO
+      def call_method(method, params = {})
+        response_body, response_headers = Request.send(client.settings, service_name, method, params)
+        Response::Builder.build(response_type, response_body, response_headers)
       end
     end
   end

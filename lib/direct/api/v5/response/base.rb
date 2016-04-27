@@ -26,6 +26,11 @@ module Direct::API::V5
       def units
         @units ||= Units.new(headers[:Units])
       end
+
+      # Response is error
+      def error?
+        false
+      end
     end
   end
 end

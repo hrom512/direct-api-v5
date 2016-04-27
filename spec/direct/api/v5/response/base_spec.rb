@@ -30,4 +30,8 @@ describe Direct::API::V5::Response::Base do
       expect(response.units.raw).to eq(response_headers[:Units])
     end
   end
+
+  describe '#error?' do
+    it { expect(response.error?).to be_falsey }
+  end
 end

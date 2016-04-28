@@ -7,8 +7,19 @@
 [![Inline docs](http://inch-ci.org/github/hrom512/direct-api-v5.svg?branch=dev)](http://inch-ci.org/github/hrom512/direct-api-v5)
 [![Dependency Status](https://gemnasium.com/hrom512/direct-api-v5.svg)](https://gemnasium.com/hrom512/direct-api-v5)
 
+## Table of contents
 
-## Installation
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Settings](#settings)
+  - [Create client](#create-client)
+  - [Call methods](#call-methods)
+  - [Get method](#get-method)
+- [Services](#services)
+  - [Campaigns](#campaigns)
+- [Contributing](#contributing)
+
+## <a name="installation"></a>Installation
 
 Add this line to your application's Gemfile:
 
@@ -23,9 +34,9 @@ Or install it yourself as:
     $ gem install direct-api-v5
 
 
-## Usage
+## <a name="usage"></a>Usage
 
-### Settings
+### <a name="settings"></a>Settings
 
 1. Load settings from YML file
 
@@ -56,7 +67,7 @@ Or install it yourself as:
   ```
 
 
-### Create client
+### <a name="create-client"></a>Create client
 
 ```ruby
 api = Direct::API::V5.client
@@ -75,7 +86,7 @@ api = Direct::API::V5.client(host: 'api.direct.yandex.com', auth_token: 'token')
 ```
 
 
-### Call methods
+### <a name="call-methods"></a>Call methods
 
 Base structure:
 
@@ -84,31 +95,37 @@ api.service_name.method(params)
 ```
 
 
-#### Get method
+### <a name="get-method"></a>Get method
 
 For all services method `get` can receive params:
 
-- `fields` (by default all)
+- `fields`
 - `criteria`
-- `limit` and `offset`
+- `page` with `limit` and `offset`
 
 For example:
 
 ```ruby
 api.campaigns.get(fields: [:id, :name],
-                  criteria: { states: ['ON'] },
-                  limit: 100,
-                  offset: 200)
+                  criteria: { states: %(ON) },
+                  page: { limit: 100, offset: 200 })
 ```
 
 Or equivalent:
 
 ```ruby
-api.campaigns.select(:id, :name).where(:state => :on).limit(100).offset(200).get
+api.campaigns
+   .select(:id, :name)
+   .where(states: %(ON))
+   .limit(100)
+   .offset(200)
+   .get
 ```
 
 
-#### Campaigns
+## <a name="services"></a>Services
+
+### <a name="campaigns"></a>Campaigns
 
 Documentation: https://tech.yandex.ru/direct/doc/ref-v5/campaigns/campaigns-docpage/
 
@@ -116,9 +133,12 @@ Examples:
 
 ```ruby
 # get
-campaigns = api.campaigns.select(:id, :name, :state, :status, :status_payment).get
-campaigns = api.campaigns.where(:type => :text_campaign, :state => [:on, :off]).get
-campaigns = api.campaigns.limit(100).get
+campaigns = api.campaigns
+               .select(:id, :name, :state, :status, :status_payment)
+               .where(types: %w(TEXT_CAMPAIGN), states: %w(ON OFF))
+               .limit(100)
+               .offset(200)
+               .get
 
 # create
 campaigns_data = [
@@ -137,24 +157,24 @@ campaigns_data = [
 campaigns = api.campaigns.update(campaigns_data)
 
 # delete
-campaigns = api.campaigns.where(id: [1, 2, 3]).delete
+campaigns = api.campaigns.where(ids: [1, 2, 3]).delete
 
 # archive
-campaigns = api.campaigns.where(id: [1, 2, 3]).archive
+campaigns = api.campaigns.where(ids: [1, 2, 3]).archive
 
 # unarchive
-campaigns = api.campaigns.where(id: [1, 2, 3]).unarchive
+campaigns = api.campaigns.where(ids: [1, 2, 3]).unarchive
 
 # suspend
-campaigns = api.campaigns.where(id: [1, 2, 3]).suspend
+campaigns = api.campaigns.where(ids: [1, 2, 3]).suspend
 
 # resume
-campaigns = api.campaigns.where(id: [1, 2, 3]).resume
+campaigns = api.campaigns.where(ids: [1, 2, 3]).resume
 ```
 
-#### TODO
+### TODO
 
-## Contributing
+## <a name="contributing"></a>Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/direct-api-v5/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)

@@ -3,14 +3,11 @@ require 'direct/api/v5/services/base'
 require 'direct/api/v5/methods/get'
 
 describe Direct::API::V5::Methods::Get do
-  module Direct::API::V5::Services
-    class ServiceWithGetMethod < Base
-      include Direct::API::V5::Methods::Get
-    end
+  class ServiceWithGetMethod < Direct::API::V5::Services::Base
+    include Direct::API::V5::Methods::Get
   end
 
-  let(:service_class) { Direct::API::V5::Services::ServiceWithGetMethod }
-  let(:service) { service_class.new(nil) }
+  let(:service) { ServiceWithGetMethod.new(nil) }
   let(:request_params) { service.request_params }
 
   describe '#get' do

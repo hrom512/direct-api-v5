@@ -94,7 +94,7 @@ describe 'campaigns.add', :type => :acceptance do
     let(:error) { campaign.errors[0] }
 
     it 'not have id' do
-      expect(campaign.id).to be_nil
+      expect(campaign[:id]).to be_nil
     end
 
     it 'not contain warnings' do

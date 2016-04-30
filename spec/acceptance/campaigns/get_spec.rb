@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'campaigns .get', :type => :acceptance do
+describe 'campaigns.get', :type => :acceptance do
   let(:api) { make_direct_api_client }
 
   before do
@@ -42,6 +42,10 @@ describe 'campaigns .get', :type => :acceptance do
       response[0]
     end
 
+    it 'is not error' do
+      expect(response.error?).to be_falsey
+    end
+
     it 'have request_id' do
       expect(response.request_id).to eq(direct_api_request_id)
     end
@@ -77,6 +81,10 @@ describe 'campaigns .get', :type => :acceptance do
 
     subject(:campaign) do
       response[0]
+    end
+
+    it 'is not error' do
+      expect(response.error?).to be_falsey
     end
 
     it 'have request_id' do

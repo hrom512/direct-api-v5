@@ -32,10 +32,10 @@ describe 'campaigns.get', :type => :acceptance do
   context 'with .select and .where' do
     subject(:response) do
       api.campaigns
-        .select(:id, :name, :state, :start_date)
-        .select(text_campaign: [:counter_ids, :relevant_keywords])
-        .where(types: %w(TEXT_CAMPAIGN), states: %w(ON SUSPENDED), statuses_payment: %w(ALLOWED))
-        .get
+         .select(:id, :name, :state, :start_date)
+         .select(text_campaign: [:counter_ids, :relevant_keywords])
+         .where(types: %w(TEXT_CAMPAIGN), states: %w(ON SUSPENDED), statuses_payment: %w(ALLOWED))
+         .get
     end
 
     subject(:campaign) do

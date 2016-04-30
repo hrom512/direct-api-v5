@@ -4,6 +4,8 @@ require 'direct/api/v5/methods/get'
 
 module Direct::API::V5
   module Services
+    # Campaigns service with methods:
+    # - get
     class Campaigns < Base
       include Methods::Get
 

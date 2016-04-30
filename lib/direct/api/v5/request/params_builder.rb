@@ -8,10 +8,10 @@ module Direct::API::V5
 
       class << self
         # Build params for API request (recursive replace symbols to camelized strings)
-        # @param params [Hash] input params
-        # @return [Hash] result params
+        # @param params [Hash, Array] input params
+        # @return [Hash, Array] result params
         def build(params)
-          process_hash(params)
+          process_value(params)
         end
 
         private

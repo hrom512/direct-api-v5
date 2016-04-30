@@ -12,7 +12,10 @@ describe Direct::API::V5::Response::UnderscoredHash do
         CounterIds: {
           Items: [1, 2]
         }
-      }
+      },
+      Warnings: [
+        { Code: 1, Message: 'Warning message' }
+      ]
     }
   end
 
@@ -26,7 +29,10 @@ describe Direct::API::V5::Response::UnderscoredHash do
         counter_ids: {
           items: [1, 2]
         }
-      }
+      },
+      warnings: [
+        { code: 1, message: 'Warning message' }
+      ]
     }
   end
 
@@ -38,10 +44,6 @@ describe Direct::API::V5::Response::UnderscoredHash do
 
   it 'underscore keys' do
     is_expected.to eq(underscored_hash)
-  end
-
-  it 'process dates' do
-    expect(subject[:start_date]).to eq(Date.new(2015, 2, 4))
   end
 
   it 'freeze data' do

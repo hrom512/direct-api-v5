@@ -37,6 +37,8 @@ module Direct::API::V5
       def process_value(value)
         if value.is_a?(Hash)
           self.class.new(value)
+        elsif value.is_a?(Array)
+          value.map { |arr_value| process_value(arr_value) }
         elsif value.is_a?(String) && value =~ /^\d{4}-\d{2}-\d{2}$/
           Date.parse(value)
         else

@@ -6,6 +6,7 @@ describe Direct::API::V5::Response::UnderscoredHash do
     {
       :Id => 1,
       'Name' => 'Value',
+      :StartDate => '2015-02-04',
       1 => 2,
       TextCampaign: {
         CounterIds: {
@@ -19,6 +20,7 @@ describe Direct::API::V5::Response::UnderscoredHash do
     {
       :id => 1,
       'name' => 'Value',
+      :start_date => Date.new(2015, 2, 4),
       1 => 2,
       text_campaign: {
         counter_ids: {
@@ -36,6 +38,10 @@ describe Direct::API::V5::Response::UnderscoredHash do
 
   it 'underscore keys' do
     is_expected.to eq(underscored_hash)
+  end
+
+  it 'process dates' do
+    expect(subject[:start_date]).to eq(Date.new(2015, 2, 4))
   end
 
   it 'freeze data' do

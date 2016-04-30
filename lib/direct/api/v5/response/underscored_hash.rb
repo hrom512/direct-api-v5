@@ -16,12 +16,32 @@ module Direct::API::V5
         raise 'Invalid param' unless data.is_a?(Hash)
 
         data.each do |key, value|
-          key = key.underscore if key.is_a?(Symbol) || key.is_a?(String)
-          value = self.class.new(value) if value.is_a?(Hash)
-          self[key] = value
+          new_key = process_key(key)
+          new_value = process_value(value)
+          self[new_key] = new_value
         end
 
         freeze
+      end
+
+      private
+
+      def process_key(key)
+        if key.is_a?(Symbol) || key.is_a?(String)
+          key.underscore
+        else
+          key
+        end
+      end
+
+      def process_value(value)
+        if value.is_a?(Hash)
+          self.class.new(value)
+        elsif value.is_a?(String) && value =~ /^\d{4}-\d{2}-\d{2}$/
+          Date.parse(value)
+        else
+          value
+        end
       end
     end
   end

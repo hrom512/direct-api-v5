@@ -5,16 +5,15 @@ AllCops:
 Metrics/LineLength:
   Max: 120
 
-Style/HashSyntax:
-  UseHashRocketsWithSymbolValues: true
+Metrics/MethodLength:
+  Max: 15
 
 Style/BlockComments:
   Exclude:
     - 'spec/spec_helper.rb'
 
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
+  Enabled: false
 
 Style/ClassAndModuleChildren:
   Enabled: false

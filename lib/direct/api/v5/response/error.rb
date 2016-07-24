@@ -1,47 +1,21 @@
-require 'direct/api/v5/response/base'
-
 module Direct::API::V5
-  module Response
-    # Error response
-    class Error < Base
-      # Response is error
-      def error?
-        true
-      end
+  class Response::Error
+    attr_reader :code
+    attr_reader :message
+    attr_reader :details
 
-      # Error code
-      # @return [Integer]
-      def code
-        error_data[:error_code]
-      end
+    def initialize(error_data = {})
+      @code = error_data[:error_code]
+      @message = error_data[:error_string]
+      @details = error_data[:error_detail]
+    end
 
-      # Error message
-      # @return [String]
-      def message
-        error_data[:error_string]
-      end
-
-      # Error details
-      # @return [String]
-      def details
-        error_data[:error_detail]
-      end
-
-      # Error code, message and details
-      # @return [Hash]
-      def to_h
-        {
-          code: code,
-          message: message,
-          details: details
-        }
-      end
-
-      private
-
-      def error_data
-        body[:error] || {}
-      end
+    def to_h
+      {
+        code: code,
+        message: message,
+        details: details
+      }
     end
   end
 end

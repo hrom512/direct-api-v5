@@ -15,22 +15,14 @@ describe Direct::API::V5::Client do
     end
   end
 
-  describe '::service_name' do
-    module Direct::API::V5::Services
-      class CustomService
-        def initialize(_client)
-        end
-      end
-    end
-
-    let(:service_class) { Direct::API::V5::Services::CustomService }
-    let(:service_obj) { double('custom_service') }
-
-    subject { client.custom_service }
+  describe '#service_name' do
+    let(:service_obj) { double('service_obj') }
 
     it 'return service object' do
-      allow(service_class).to receive(:new).with(client).and_return(service_obj)
-      is_expected.to eq(service_obj)
+      params = { client: client, service_name: :campaigns }
+      allow(Direct::API::V5::Service).to receive(:new).with(params).and_return(service_obj)
+
+      expect(client.campaigns).to eq(service_obj)
     end
   end
 end

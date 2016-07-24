@@ -1,16 +1,32 @@
-require 'direct/api/v5/response/error'
-
 module Direct::API::V5
-  # Response module
-  module Response
-    # Build response object
-    # @param response_type [Class] response class
-    # @param body [Hash] response body
-    # @param headers [Hash] response headers
-    # @return [Direct::API::V5::Response::Base] response object
-    def self.build(response_type, body, headers)
-      response_class = body[:error] ? Error : response_type
-      response_class.new(body, headers)
+  class Response
+    attr_reader :body
+    attr_reader :headers
+
+    def initialize(body, headers)
+      @body = body
+      @headers = headers
+    end
+
+    def result
+      body[:result]
+    end
+
+    def request_id
+      @request_id ||= headers[:RequestId]
+    end
+
+    def units
+      @units ||= Units.new(headers[:Units])
+    end
+
+    def error?
+      body.key?(:error)
+    end
+
+    def error
+      return unless error?
+      @error ||= Error.new(body[:error])
     end
   end
 end

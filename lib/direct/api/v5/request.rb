@@ -1,79 +1,66 @@
-require 'multi_json'
-require 'faraday'
-require 'direct/api/v5/request/params_builder'
-require 'direct/api/v5/request/invalid_response_error'
+module Direct::API::V5
+  class Request
+    REQUEST_TIMEOUT = 300
 
-module Direct
-  module API
-    module V5
-      # Make HTTP requests to Direct API
-      module Request
-        class << self
-          REQUEST_TIMEOUT = 300
+    def initialize(settings:, service_name:, api_method:, params: {})
+      @settings = settings
+      @service_name = service_name
+      @api_method = api_method
+      @params = params
+    end
 
-          # Make HTTP request to Direct API
-          # @param settings [Direct::API::V5::Settings] settings object
-          # @param service [Symbol] service name
-          # @param method [Symbol] method name
-          # @param params [Hash] method params
-          # @return [Array] response body and headers
-          def send(settings, service, method, params = {})
-            host = settings.host
-            url = make_url(service)
-            request_body = make_body(method, params)
-            request_headers = make_headers(settings.language, settings.auth_token, settings.client_login)
+    def send
+      response = make_http_request
+      response_body = parse_response(response.body)
 
-            response = make_http_request(host, url, request_body, request_headers)
+      [response_body, response.headers]
+    end
 
-            response_body = parse_response(response.body)
-            response_headers = response.headers
+    private
 
-            [response_body, response_headers]
-          end
+    def make_http_request
+      connection = Faraday.new(url: "https://#{api_host}")
 
-          private
-
-          def make_url(service)
-            "/json/v5/#{service}/"
-          end
-
-          def make_body(method, params)
-            body = {
-              method: method,
-              params: ParamsBuilder.build(params)
-            }
-            MultiJson.dump(body)
-          end
-
-          def make_headers(language, auth_token, client_login)
-            {
-              'Content-Type' => 'application/json; charset=utf-8',
-              'Accept-Language' => language,
-              'Authorization' => "Bearer #{auth_token}",
-              'Client-Login' => client_login
-            }
-          end
-
-          def make_http_request(host, url, body, headers)
-            conn = Faraday.new(url: "https://#{host}")
-
-            conn.post do |request|
-              request.options.timeout = REQUEST_TIMEOUT
-              request.url url
-              request.body = body
-              headers.each do |key, value|
-                request.headers[key] = value
-              end
-            end
-          end
-
-          def parse_response(response_body)
-            MultiJson.load(response_body, symbolize_keys: true)
-          rescue MultiJson::ParseError => e
-            raise InvalidResponseError, e.message
-          end
+      connection.post do |request|
+        request.options.timeout = REQUEST_TIMEOUT
+        request.url api_url
+        request.body = body
+        headers.each do |key, value|
+          request.headers[key] = value
         end
       end
+    rescue Faraday::Error => e
+      raise RequestError, e.message
+    end
+
+    def parse_response(response_body)
+      MultiJson.load(response_body, symbolize_keys: true)
+    rescue MultiJson::ParseError => e
+      raise InvalidResponseError, e.message
+    end
+
+    def api_host
+      @settings.host
+    end
+
+    def api_url
+      "/json/v5/#{@service_name}/"
+    end
+
+    def headers
+      {
+        'Content-Type' => 'application/json; charset=utf-8',
+        'Accept-Language' => @settings.language,
+        'Authorization' => "Bearer #{@settings.auth_token}",
+        'Client-Login' => @settings.client_login
+      }
+    end
+
+    def body
+      MultiJson.dump(
+        method: @api_method,
+        params: ParamsBuilder.new(@params).build
+      )
     end
   end
 end

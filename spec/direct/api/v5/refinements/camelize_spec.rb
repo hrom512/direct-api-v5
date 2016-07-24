@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'direct/api/v5/refinements/camelize'
 
 describe Direct::API::V5::Refinements::Camelize do
   using described_class

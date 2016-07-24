@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Direct::API::V5::Request::ParamsBuilder do
+describe Direct::API::V5::ParamsBuilder do
   let(:input_params) do
     {
       selection_criteria: {
@@ -31,7 +31,7 @@ describe Direct::API::V5::Request::ParamsBuilder do
     }
   end
 
-  subject { described_class.build(input_params) }
+  subject { described_class.new(input_params).build }
 
   it 'prepare params' do
     is_expected.to eq(output_params)

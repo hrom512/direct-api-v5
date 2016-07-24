@@ -1,52 +1,66 @@
 require 'spec_helper'
 
 describe Direct::API::V5::Response do
-  describe '::build' do
-    let(:response_type) { double('response_type') }
-    let(:headers) { {} }
+  let(:headers) do
+    {
+      RequestId: '123',
+      Units: '10/100/200'
+    }
+  end
+  let(:body) do
+    {
+      result: {
+        Campaigns: []
+      }
+    }
+  end
+  let(:error_body) do
+    {
+      error: {
+        error_code: 54,
+        error_string: 'No rights',
+        error_detail: 'No rights to indicated client'
+      }
+    }
+  end
 
-    subject { described_class.build(response_type, body, headers) }
+  let(:response) { described_class.new(body, headers) }
+  let(:error_response) { described_class.new(error_body, headers) }
 
-    context 'without errors' do
-      let(:body) do
-        {
-          result: {
-            Campaigns: []
-          }
-        }
-      end
-
-      let(:response) { double('response') }
-
-      before do
-        allow(response_type).to receive(:new).with(body, headers).and_return(response)
-      end
-
-      it 'build response' do
-        is_expected.to eq(response)
-      end
+  describe '#result' do
+    it 'return data from result key' do
+      expect(response.result).to eq(Campaigns: [])
+      expect(error_response.result).to be_nil
     end
+  end
 
-    context 'with errors' do
-      let(:body) do
-        {
-          error: {
-            error_code: 54,
-            error_string: 'No rights',
-            error_detail: 'No rights to indicated client'
-          }
-        }
-      end
+  describe '#request_id' do
+    it 'return data from headers' do
+      expect(response.request_id).to eq('123')
+      expect(error_response.request_id).to eq('123')
+    end
+  end
 
-      let(:error_response) { double('error_response') }
+  describe '#units' do
+    it 'return Units object' do
+      expect(response.units).to be_a(Direct::API::V5::Response::Units)
+      expect(response.units.raw).to eq('10/100/200')
+    end
+  end
 
-      before do
-        allow(Direct::API::V5::Response::Error).to receive(:new).with(body, headers).and_return(error_response)
-      end
+  describe '#error?' do
+    it 'check error key' do
+      expect(response.error?).to eq(false)
+      expect(error_response.error?).to eq(true)
+    end
+  end
 
-      it 'build response' do
-        is_expected.to eq(error_response)
-      end
+  describe '#error' do
+    it 'return Error object' do
+      expect(response.error).to be_nil
+
+      expect(error_response.error).to be_a(Direct::API::V5::Response::Error)
+      expect(error_response.error.code).to eq(54)
     end
   end
 end

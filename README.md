@@ -4,22 +4,12 @@
 [![Travis CI](https://travis-ci.org/hrom512/direct-api-v5.svg?branch=dev)](https://travis-ci.org/hrom512/direct-api-v5)
 [![Code Climate](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/gpa.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5)
 [![Test Coverage](https://codeclimate.com/github/Hrom512/direct-api-v5/badges/coverage.svg)](https://codeclimate.com/github/Hrom512/direct-api-v5/coverage)
-[![Inline docs](http://inch-ci.org/github/hrom512/direct-api-v5.svg?branch=dev)](http://inch-ci.org/github/hrom512/direct-api-v5)
 [![Dependency Status](https://gemnasium.com/hrom512/direct-api-v5.svg)](https://gemnasium.com/hrom512/direct-api-v5)
 
-## Table of contents
+Ruby wrapper for Yandex Direct API V5.
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Settings](#settings)
-  - [Create client](#create-client)
-  - [Call methods](#call-methods)
-  - [Get method](#get-method)
-- [Services](#services)
-  - [Campaigns](#campaigns)
-- [Contributing](#contributing)
 
-## <a name="installation"></a>Installation
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -34,9 +24,9 @@ Or install it yourself as:
     $ gem install direct-api-v5
 
 
-## <a name="usage"></a>Usage
+## Usage
 
-### <a name="settings"></a>Settings
+### Settings
 
 1. Load settings from YML file
 
@@ -66,8 +56,7 @@ Or install it yourself as:
   end
   ```
 
-
-### <a name="create-client"></a>Create client
+### Create client
 
 ```ruby
 api = Direct::API::V5.client
@@ -85,8 +74,7 @@ Also you can overwrite any default settings:
 api = Direct::API::V5.client(host: 'api.direct.yandex.com', auth_token: 'token')
 ```
 
-
-### <a name="call-methods"></a>Call methods
+### Call methods
 
 Base structure:
 
@@ -94,89 +82,71 @@ Base structure:
 api.service_name.method(params)
 ```
 
-
-### <a name="get-method"></a>Get method
-
-For all services method `get` can receive params:
-
-- `fields`
-- `criteria`
-- `page` with `limit` and `offset`
-
 For example:
 
 ```ruby
-api.campaigns.get(fields: [:id, :name],
-                  criteria: { states: %(ON) },
-                  page: { limit: 100, offset: 200 })
+response = api.campaigns.get(
+  fields: [:id, :name],
+  criteria: { states: %(ON) },
+  page: { limit: 100, offset: 200 }
+)
+
+response.error?
+# => false
+
+response.result
+# =>
+# {
+#   Campaigns: [
+#     { Id: 1, Name: "Campaign 1" },
+#     ...
+#   ]
+# }
+
+response.request_id
+# => 123456
+
+response.units.spent
+# => 10
+
+response.units.available
+# => 1000
+
+response.units.daily_limit
+# => 2000
+
+response.units.raw
+# => 10/1000/2000
 ```
 
-Or equivalent:
+If API return error:
 
 ```ruby
-api.campaigns
-   .select(:id, :name)
-   .where(states: %(ON))
-   .limit(100)
-   .offset(200)
-   .get
+response.error?
+# => true
+
+response.error.code
+# => 54
+
+response.error.message
+# => "No rights"
+
+response.error.details
+# => "No rights to indicated client"
+
+response.error.to_h
+# =>
+# {
+#   code: 54,
+#   message: "No rights",
+#   details: "No rights to indicated client"
+# }
 ```
 
 
-## <a name="services"></a>Services
+## Contributing
 
-### <a name="campaigns"></a>Campaigns
-
-Documentation: https://tech.yandex.ru/direct/doc/ref-v5/campaigns/campaigns-docpage/
-
-Examples:
-
-```ruby
-# get
-campaigns = api.campaigns
-               .select(:id, :name, :state, :status, :status_payment)
-               .where(types: %w(TEXT_CAMPAIGN), states: %w(ON OFF))
-               .limit(100)
-               .offset(200)
-               .get
-
-# create
-campaigns_data = [
-  { name: 'Campaign1', start_date: '2015-01-01', ... },
-  { name: 'Campaign2', start_date: '2015-01-02', ... },
-  ...
-]
-campaigns = api.campaigns.add(campaigns_data)
-
-# update
-campaigns_data = [
-  { id: 1, name: 'Campaign1' },
-  { id: 2, name: 'Campaign2' },
-  ...
-]
-campaigns = api.campaigns.update(campaigns_data)
-
-# delete
-campaigns = api.campaigns.where(ids: [1, 2, 3]).delete
-
-# archive
-campaigns = api.campaigns.where(ids: [1, 2, 3]).archive
-
-# unarchive
-campaigns = api.campaigns.where(ids: [1, 2, 3]).unarchive
-
-# suspend
-campaigns = api.campaigns.where(ids: [1, 2, 3]).suspend
-
-# resume
-campaigns = api.campaigns.where(ids: [1, 2, 3]).resume
-```
-
-### TODO
-
-## <a name="contributing"></a>Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/direct-api-v5/fork )
+1. Fork it ( https://github.com/hrom512/direct-api-v5/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

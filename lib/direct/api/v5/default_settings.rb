@@ -23,7 +23,6 @@ module Direct
           end
 
           # Set default settings from .yml file
-          # @param yml_file [String] path to .yml file
           def load_from_yml(yml_file)
             settings = YAML.load_file(yml_file)[ENV['RAILS_ENV']] || {}
             @host = settings['host']

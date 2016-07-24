@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'direct/api/v5/response/units'
 
 describe Direct::API::V5::Response::Units do
   let(:raw_units) { '10/20828/64000' }

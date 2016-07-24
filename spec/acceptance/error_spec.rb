@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'api error', :type => :acceptance do
+describe 'api error', type: :acceptance do
   let(:api) { make_direct_api_client }
 
   before do
@@ -25,8 +25,8 @@ describe 'api error', :type => :acceptance do
   it 'return error' do
     expect(response.error?).to be_truthy
 
-    expect(response.code).to eq(54)
-    expect(response.message).to eq('No rights')
-    expect(response.details).to eq('No rights to indicated client')
+    expect(response.error.code).to eq(54)
+    expect(response.error.message).to eq('No rights')
+    expect(response.error.details).to eq('No rights to indicated client')
   end
 end

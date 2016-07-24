@@ -39,11 +39,13 @@ Or install it yourself as:
     host: api.direct.yandex.com
     auth_token: token_string
     client_login: login_string
+    language: ru
 
   development:
     host: api-sandbox.direct.yandex.com
     auth_token: token_string
     client_login: login_string
+    language: ru
   ```
 
 2. Configure in block
@@ -53,6 +55,7 @@ Or install it yourself as:
     config.host = 'api.direct.yandex.com'
     config.auth_token = 'token_string'
     config.client_login = 'login_string'
+    config.language = 'ru'
   end
   ```
 

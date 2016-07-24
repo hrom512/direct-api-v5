@@ -48,12 +48,13 @@ module Direct::API::V5
     end
 
     def headers
-      {
+      result = {
         'Content-Type' => 'application/json; charset=utf-8',
-        'Accept-Language' => @settings.language,
-        'Authorization' => "Bearer #{@settings.auth_token}",
-        'Client-Login' => @settings.client_login
+        'Accept-Language' => @settings.language
       }
+      result['Authorization'] = "Bearer #{@settings.auth_token}" if @settings.auth_token
+      result['Client-Login'] = @settings.client_login if @settings.client_login
+      result
     end
 
     def body

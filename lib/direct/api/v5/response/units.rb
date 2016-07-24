@@ -10,17 +10,17 @@ module Direct::API::V5
 
     # Spent units (by request)
     def spent
-      @spent ||= parts[0]
+      parts[0]
     end
 
     # Available units (in current hour)
     def available
-      @available ||= parts[1]
+      parts[1]
     end
 
     # Units daily limit
     def daily_limit
-      @daily_limit ||= parts[2]
+      parts[2]
     end
 
     private

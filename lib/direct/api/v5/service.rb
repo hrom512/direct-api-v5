@@ -1,8 +1,5 @@
 module Direct::API::V5
   class Service
-    attr_reader :client
-    attr_reader :service_name
-
     def initialize(client:, service_name:)
       @client = client
       @service_name = service_name
@@ -22,8 +19,8 @@ module Direct::API::V5
 
     def call_api_method(method_name, params = {})
       request = Request.new(
-        settings: client.settings,
-        service_name: service_name,
+        settings: @client.settings,
+        service_name: @service_name,
         api_method: method_name,
         params: params
       )

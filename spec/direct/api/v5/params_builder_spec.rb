@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Direct::API::V5::ParamsBuilder do
   let(:input_params) do
     {
-      selection_criteria: {
+      criteria: {
         types: %w(TEXT_CAMPAIGN),
         states: %w(ON OFF)
       },
-      field_names: [:id, :name, :state, :status, :status_payment],
-      text_campaign_field_names: [:counter_ids],
+      fields: [:id, :name, :state, :status, :status_payment],
+      text_campaign_fields: [:counter_ids],
       page: {
         limit: 100,
         offset: 200

@@ -19,8 +19,6 @@ module Direct::API::V5
         process_array(value)
       elsif value.is_a?(Symbol)
         value.camelize
-      elsif value.is_a?(String) && value =~ /^\d{4}-\d{2}-\d{2}$/
-        Date.parse(value)
       else
         value
       end

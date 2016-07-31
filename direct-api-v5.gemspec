@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'roman@alltmb.ru'
   spec.summary       = 'Yandex Direct API V5'
   spec.description   = 'Ruby wrapper for Yandex Direct API V5'
-  spec.homepage      = 'https://github.com/Hrom512/direct-api-v5'
+  spec.homepage      = 'https://github.com/hrom512/direct-api-v5'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")

@@ -90,7 +90,7 @@ For example:
 ```ruby
 response = api.campaigns.get(
   fields: [:id, :name],
-  criteria: { states: %(ON) },
+  criteria: { states: %w(ON) },
   page: { limit: 100, offset: 200 }
 )
 
